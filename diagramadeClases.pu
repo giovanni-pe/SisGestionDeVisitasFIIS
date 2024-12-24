@@ -1,0 +1,120 @@
+@startuml
+entity User {
+  +id: BIGINT [PK]
+  --
+  name: VARCHAR
+  email: VARCHAR
+  email_verified_at: TIMESTAMP
+  password: VARCHAR
+  join_date: TIMESTAMP
+  status: TINYINT
+  remember_token: VARCHAR
+  created_at: TIMESTAMP
+  updated_at: TIMESTAMP
+}
+
+entity VisitorRepresentative {
+  +id: BIGINT [PK]
+  --
+  user_id: BIGINT [FK]
+  identification: VARCHAR
+  phone: VARCHAR
+  created_at: TIMESTAMP
+  updated_at: TIMESTAMP
+}
+
+entity Request {
+  +id: BIGINT [PK]
+  --
+  representative_id: BIGINT [FK]
+  request_type: VARCHAR
+  request_reason: VARCHAR
+  requested_date: DATE
+  visitor_count: INT
+  status: VARCHAR
+  created_at: TIMESTAMP
+  updated_at: TIMESTAMP
+}
+
+entity Visit {
+  +id: BIGINT [PK]
+  --
+  request_id: BIGINT [FK]
+  unique_identifier: VARCHAR
+  visitor_count: INT
+  check_in_time: TIMESTAMP
+  check_out_time: TIMESTAMP
+  status: VARCHAR
+  created_at: TIMESTAMP
+  updated_at: TIMESTAMP
+}
+
+entity Event {
+  +id: BIGINT [PK]
+  --
+  title: VARCHAR
+  description: TEXT
+  start_date: DATETIME
+  end_date: DATETIME
+  created_at: TIMESTAMP
+  updated_at: TIMESTAMP
+}
+
+entity Calendar {
+  +id: BIGINT [PK]
+  --
+  request_id: BIGINT [FK]
+  event_type: VARCHAR
+  title: VARCHAR
+  start: DATETIME
+  end: DATETIME
+  created_at: TIMESTAMP
+  updated_at: TIMESTAMP
+}
+
+entity roles {
+  +id: BIGINT [PK]
+  --
+  name: VARCHAR
+  guard_name: VARCHAR
+  created_at: TIMESTAMP
+  updated_at: TIMESTAMP
+}
+
+entity permissions {
+  +id: BIGINT [PK]
+  --
+  name: VARCHAR
+  guard_name: VARCHAR
+  created_at: TIMESTAMP
+  updated_at: TIMESTAMP
+}
+
+entity model_has_roles {
+  +role_id: BIGINT [FK]
+  --
+  model_type: VARCHAR
+  model_id: BIGINT [FK]
+}
+
+entity model_has_permissions {
+  +permission_id: BIGINT [FK]
+  --
+  model_type: VARCHAR
+  model_id: BIGINT [FK]
+}
+
+entity role_has_permissions {
+  +role_id: BIGINT [FK]
+  --
+  permission_id: BIGINT [FK]
+}
+
+User ||--o{ VisitorRepresentative : "has"
+VisitorRepresentative ||--o{ Request : "submits"
+Request ||--o| Visit : "leads to"
+Request ||--o| Calendar : "is scheduled in"
+roles ||--o{ model_has_roles : "has"
+permissions ||--o{ model_has_permissions : "has"
+roles ||--o{ role_has_permissions : "has"
+@enduml
