@@ -1,25 +1,26 @@
 <?php
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class VisitorRepresentative extends Model
 {
-    protected $fillable = ['user_id', 'identification', 'phone'];
+    use HasFactory;
 
-    /**
-     * Relationship with User
-     */
+    protected $fillable = [
+        'user_id',
+        'identification',
+        'phone',
+    ];
+
     public function user()
     {
         return $this->belongsTo(User::class);
     }
 
-    /**
-     * Relationship with Requests
-     */
-    public function requests()
+    public function visitRequests()
     {
-        return $this->hasMany(Request::class, 'representative_id', 'id');
+        return $this->hasMany(VisitRequest::class);
     }
 }

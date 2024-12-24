@@ -5,13 +5,13 @@ use Illuminate\Database\Eloquent\Model;
 
 class Calendar extends Model
 {
-    protected $fillable = ['request_id', 'event_type', 'title', 'start', 'end'];
+    protected $fillable = ['visit_request_id', 'event_type', 'title', 'start', 'end'];
 
     /**
      * Relationship with Requests.
      */
     public function request()
     {
-        return $this->belongsTo(Request::class, 'request_id', 'id');
+        return $this->belongsTo(VisitRequest::class, 'request_id', 'id');
     }
 }
