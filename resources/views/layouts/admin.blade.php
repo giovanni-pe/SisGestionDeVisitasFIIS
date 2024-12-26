@@ -317,11 +317,35 @@ scratch. This page gets rid of all links and provides the needed markup only.
 
 
 
+                      
+
+                        @can('research_lines')
+                            <li class="nav-item">
+                                <a href="" class="nav-link active">
+                                    <i class="nav-icon fas fa-stream"></i>
+                                    <p>Solicitudes De Visita<i class="right fas fa-angle-left"></i></p>
+                                </a>
+                                <ul class="nav nav-treeview">
+                                    <li class="nav-item">
+                                        <a href="{{ route('visitRequests.index') }}" class="nav-link">
+                                            <i class="far fa-circle nav-icon"></i>
+                                            <p>Visitas Pendientes</p>
+                                        </a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a href="{{ route('visitRequests.index') }}" class="nav-link">
+                                            <i class="far fa-circle nav-icon"></i>
+                                            <p>Visitas Aceptadas</p>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </li>
+                        @endcan
                         @can('research_groups')
                         <li class="nav-item">
                             <a href="" class="nav-link active">
                                 <i class="nav-icon fas fa-users"></i>
-                                <p>Representantes de Visita<i class="right fas fa-angle-left"></i></p>
+                                <p>Representantes<i class="right fas fa-angle-left"></i></p>
                             </a>
                             <ul class="nav nav-treeview">
                                 <li class="nav-item">
@@ -339,30 +363,6 @@ scratch. This page gets rid of all links and provides the needed markup only.
                             </ul>
                         </li>
                         @endcan
-
-                        @can('research_lines')
-                            <li class="nav-item">
-                                <a href="" class="nav-link active">
-                                    <i class="nav-icon fas fa-stream"></i>
-                                    <p>Visitas Pendientes<i class="right fas fa-angle-left"></i></p>
-                                </a>
-                                <ul class="nav nav-treeview">
-                                    <li class="nav-item">
-                                        <a href="{{ route('visitor_representatives.index') }}" class="nav-link">
-                                            <i class="far fa-circle nav-icon"></i>
-                                            <p>Visitas Pendientes</p>
-                                        </a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a href="{{ route('visitor_representatives.index') }}" class="nav-link">
-                                            <i class="far fa-circle nav-icon"></i>
-                                            <p>Listado de Líneas</p>
-                                        </a>
-                                    </li>
-                                </ul>
-                            </li>
-                        @endcan
-                       
                         @can('processes')
                             <li class="nav-item">
                                 <a href="" class="nav-link active">
@@ -380,31 +380,6 @@ scratch. This page gets rid of all links and provides the needed markup only.
                                         <a href="{{ route('processes.index') }}" class="nav-link">
                                             <i class="far fa-circle nav-icon"></i>
                                             <p>Listado de Procesos</p>
-                                        </a>
-                                    </li>
-                                </ul>
-                            </li>
-                        @endcan
-
-                     
-
-                        @can('deliverables')
-                            <li class="nav-item">
-                                <a href="" class="nav-link active">
-                                    <i class="nav-icon fas fa-file-alt"></i>
-                                    <p>Visitas en Proceso<i class="right fas fa-angle-left"></i></p>
-                                </a>
-                                <ul class="nav nav-treeview">
-                                    <li class="nav-item">
-                                        <a href="{{ route('visitor_representatives.index') }}" class="nav-link">
-                                            <i class="far fa-circle nav-icon"></i>
-                                            <p>Nuevo Entregable</p>
-                                        </a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a href="{{ route('visitor_representatives.index') }}" class="nav-link">
-                                            <i class="far fa-circle nav-icon"></i>
-                                            <p>Listado de Entregables</p>
                                         </a>
                                     </li>
                                 </ul>
@@ -550,7 +525,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
         <footer class="main-footer">
             <!-- To the right -->
             <div class="float-right d-none d-sm-inline">
-                El Diseño de Investigación I - RESEGTI
+                Gestion de Servicios de TI 2024-II
             </div>
             <!-- Default to the left -->
             <strong>Copyright &copy; 2025 <a href="https://github.com/giovanni-pe">GK</a>.</strong> All rights

@@ -45,7 +45,9 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
-    public function students(){
-        $this->hasMany('App\Models\Students', 'student_id', 'id');
+    public function visitorRepresentatives()
+    {
+        return $this->hasMany(VisitorRepresentative::class);
     }
+    
 }

@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AsistenciaController;
+use App\Http\Controllers\VisitRequestController;
  Route::get('/asistencias/reportes', [AsistenciaController::class, 'reportes']);
 
 /*
@@ -38,3 +39,8 @@ Route::resource('processes',App\Http\Controllers\ProcessController::class);
 
 
 Route::resource('visitor_representatives', App\Http\Controllers\VisitorRepresentativeController::class);
+
+Route::get('/visit-requests', [VisitRequestController::class, 'index'])->name('visitRequests.index');
+
+// Ruta para actualizar el estado de una solicitud
+Route::patch('/visit-requests/{id}/status', [VisitRequestController::class, 'updateStatus'])->name('visitRequests.updateStatus');
