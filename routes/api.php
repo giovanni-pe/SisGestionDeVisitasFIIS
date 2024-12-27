@@ -21,12 +21,9 @@ use App\Http\Controllers\Api\CalendarController;
 Route::post('/register', [VisitorAuthController::class, 'registerUser']); // Registro de usuario
 Route::middleware('auth:sanctum')->post('/representative/register', [VisitorAuthController::class, 'registerRepresentative']); // Registro de representante
 Route::post('/representative/login', [VisitorAuthController::class, 'login']); // Login de representante
-
-
 Route::middleware('auth:sanctum')->group(function () {
     Route::post('/representative', [VisitorRepresentativeController::class, 'storeOrUpdate']);
     Route::post('/visit-requests', [VisitRequestController::class, 'store']);
-   // Route::get('/calendar/unavailable-dates', [CalendarController::class, 'getUnavailableDates']);
 });
 
 Route::get('/calendar/unavailable-dates', [CalendarController::class, 'getUnavailableDates']);

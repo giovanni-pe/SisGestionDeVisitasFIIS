@@ -15,12 +15,11 @@ return new class extends Migration
     {
         Schema::create('visitor_representatives', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id')->constrained('users')->onDelete('cascade'); // Links to 'users' table
-            $table->string('identification')->unique(); // Unique identification for the representative
-            $table->string('phone'); // Contact phone number
+            $table->foreignId('user_id')->constrained('users')->onDelete('cascade')->onUpdate('cascade'); 
+            $table->string('identification')->unique();
+            $table->string('phone'); 
             $table->timestamps();
-        });
-        
+        }); 
     }
 
     /**

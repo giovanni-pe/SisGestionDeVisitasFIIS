@@ -16,11 +16,11 @@ return new class extends Migration
         Schema::create('visit_requests', function (Blueprint $table) {
             $table->id();
             $table->foreignId('representative_id')->constrained('visitor_representatives')->onDelete('cascade'); // Links to 'visitor_representatives'
-            $table->string('request_type'); // Type of request, e.g., "Guided Tour"
-            $table->text('request_reason'); // Reason for the visit request
-            $table->date('requested_date'); // Preferred date for the visit
-            $table->integer('visitor_count')->default(1); // Number of visitors (1 for individual, >1 for groups)
-            $table->string('status')->default('pending'); // Status: "pending", "approved", "rejected"
+            $table->string('request_type');
+            $table->text('request_reason'); 
+            $table->date('requested_date'); 
+            $table->integer('visitor_count')->default(1); 
+            $table->enum('status', ['pending', 'approved', 'rejected'])->default('pending');
             $table->timestamps();
         });
         

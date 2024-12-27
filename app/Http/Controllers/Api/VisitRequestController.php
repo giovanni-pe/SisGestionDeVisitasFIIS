@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\VisitorRepresentative;
 use App\Models\VisitRequest;
 use App\Models\Calendar;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 class VisitRequestController extends Controller
@@ -34,8 +35,6 @@ class VisitRequestController extends Controller
                 'start' => 'required|date_format:Y-m-d H:i:s',
                 'end' => 'required|date_format:Y-m-d H:i:s|after:start',
             ]);
-
-            // Verificar si la fecha ya está ocupada en el calendario
             $dateExists = Calendar::where('start', '<=', $validatedData['start'])
                 ->where('end', '>=', $validatedData['end'])
                 ->exists();
@@ -46,7 +45,6 @@ class VisitRequestController extends Controller
                 ], 400);
             }
 
-            // Crear la solicitud de visita
             $visitRequest = VisitRequest::create([
                 'representative_id' => $representative->id,
                 'request_type' => $validatedData['request_type'],
@@ -56,7 +54,15 @@ class VisitRequestController extends Controller
                 'status' => 'pending',
             ]);
 
-            // Crear el evento en el calendario
+            $start = Carbon::parse($validatedData['start']);
+            $end = Carbon::parse($validatedData['end']);
+            
+     
+            if ($end->diffInDays($start) > 0) {
+                return back()->withErrors(['end' => 'The event duration cannot exceed one day.']);
+            }
+            
+      
             $calendarEvent = Calendar::create([
                 'visit_request_id' => $visitRequest->id,
                 'event_type' => $validatedData['event_type'],
@@ -64,7 +70,6 @@ class VisitRequestController extends Controller
                 'start' => $validatedData['start'],
                 'end' => $validatedData['end'],
             ]);
-
             return response()->json([
                 'message' => 'Solicitud y evento creados exitosamente.',
                 'visit_request' => $visitRequest,

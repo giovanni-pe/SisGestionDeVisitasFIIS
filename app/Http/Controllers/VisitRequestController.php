@@ -2,15 +2,18 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\VisitConfirmation;
+use App\Models\Calendar;
+use App\Models\Visit;
 use App\Models\VisitRequest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
+use SimpleSoftwareIO\QrCode\Facades\QrCode;
 
 class VisitRequestController extends Controller
 {
-    /**
-     * Muestra todas las solicitudes de visita en el dashboard.
-     */
+
+
     public function index()
     {
         // Obtener solicitudes con relaciones necesarias
@@ -18,64 +21,76 @@ class VisitRequestController extends Controller
 
         return view('visits.index', compact('visitRequests'));
     }
-
     /**
      * Actualiza el estado de una solicitud de visita.
      */
     public function updateStatus(Request $request, $id)
     {
-        // Validar el estado recibido
-        $request->validate([
-            'status' => 'required|string|in:pending,confirmed,completed',
-            'notify_email' => 'nullable|boolean',
-            'notify_whatsapp' => 'nullable|boolean',
-        ]);
-
-        // Buscar la solicitud y actualizar el estado
         $visitRequest = VisitRequest::findOrFail($id);
-        $visitRequest->status = $request->status;
+
+        // Guardar el estado anterior antes de actualizarlo
+        $previousStatus = $visitRequest->status;
+
+        // Actualizar el estado
+        $visitRequest->status = $request->input('status');
         $visitRequest->save();
 
-        // Enviar notificaciones si están seleccionadas
-        if ($request->notify_email) {
-            $this->sendEmailNotification($visitRequest);
+        // Crear la visita si el estado cambia a "approved"
+        if ($visitRequest->status === 'approved') {
+            // Obtener la fecha de la visita desde la tabla 'calendar'
+            $calendarEntry = $visitRequest->calendar;
+
+            if (!$calendarEntry) {
+                return redirect()->route('visitRequests.index')->withErrors('No se pudo encontrar la fecha de la visita en el calendario.');
+            }
+
+            // Crear la entrada en la tabla "visits"
+            $visit = new Visit();
+            $visit->visit_request_id = $visitRequest->id;
+            $visit->visitor_count = $visitRequest->visitor_count;
+
+            // Generar un código único basado en el correo del usuario y un número aleatorio
+            $uniqueCode = hash('sha256', $visitRequest->email . rand(1000, 9999));
+            $visit->unique_identifier = $uniqueCode;
+            $visit->save();
+
+            // Enviar el correo con el QR dinámico y detalles de la visita
+            $this->sendVisitNotification($visit, $visitRequest, $calendarEntry);
         }
 
-        if ($request->notify_whatsapp) {
-            $this->sendWhatsAppNotification($visitRequest);
-        }
-
-        return redirect()->route('visitRequests.index')->with('success', 'El estado de la solicitud ha sido actualizado.');
+        return redirect()->route('visitRequests.index')->with('success', 'El estado de la solicitud de visita ha sido actualizado.');
     }
 
     /**
      * Envía una notificación por correo electrónico.
      */
-    protected function sendEmailNotification($visitRequest)
-    {
-        $user = $visitRequest->representative->user;
+    protected function sendVisitNotification(Visit $visit, VisitRequest $visitRequest, Calendar $calendarEntry)
+{
+    $representative = $visitRequest->representative;
+    $user = $representative->user;
 
-        if ($user && $user->email) {
-            $details = [
-                'title' => 'Actualización de Estado de Solicitud',
-                'body' => "La solicitud de visita con ID {$visitRequest->id} ha cambiado a estado: {$visitRequest->status}.",
-            ];
+    $details = [
+        'user_name' => $user->name,
+        'representative_name' => $representative->user->name ?? 'No especificado',
+        'representative_id' => $representative->identification ?? 'No disponible',
+        'representative_phone' => $representative->phone ?? 'No disponible',
+        'request_type' => $visitRequest->request_type ?? 'No especificado',
+        'request_reason' => $visitRequest->request_reason ?? 'No especificado',
+        'scheduled_date' => $calendarEntry->start, // Fecha programada desde la tabla "calendar"
+        'visitor_count' => $visitRequest->visitor_count ?? 0,
+        'visit_identifier' => $visit->unique_identifier,
+    ];
 
-           // Mail::to($user->email)->send(new \App\Mail\VisitRequestStatusMail($details));
-        }
-    }
+    // Generar el contenido del QR y guardarlo como archivo temporal
+    $qrContent = "Unique Code: {$visit->unique_identifier}";
+    $filePath = storage_path('app/temp_qr_' . $visit->id . '.png');
+    QrCode::format('png')->size(300)->generate($qrContent, $filePath);
 
-    /**
-     * Envía una notificación por WhatsApp.
-     */
-    protected function sendWhatsAppNotification($visitRequest)
-    {
-        $representative = $visitRequest->representative;
+    // Enviar el correo con los detalles y el QR adjunto
+    Mail::to($user->email)->send(new VisitConfirmation($details, $filePath));
 
-        if ($representative && $representative->phone) {
-            // Aquí podrías usar un servicio como Twilio para enviar mensajes de WhatsApp.
-            // Ejemplo de envío (lógica ficticia):
-            // Twilio::sendWhatsApp($representative->phone, "La solicitud de visita con ID {$visitRequest->id} ha cambiado a estado: {$visitRequest->status}.");
-        }
-    }
+    // Opcional: Eliminar el archivo temporal después del envío
+    unlink($filePath);
+}
+
 }

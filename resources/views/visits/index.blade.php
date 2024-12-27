@@ -37,10 +37,10 @@
                             <td>
                                 @if ($request->status === 'pending')
                                     <span class="badge bg-warning">Pendiente</span>
-                                @elseif ($request->status === 'confirmed')
-                                    <span class="badge bg-success">Confirmado</span>
-                                @elseif ($request->status === 'completed')
-                                    <span class="badge bg-secondary">Completado</span>
+                                @elseif ($request->status === 'approved')
+                                    <span class="badge bg-success">Aprobado</span>
+                                @elseif ($request->status === 'rejected')
+                                    <span class="badge bg-secondary">Rechazado</span>
                                 @endif
                             </td>
                             <td>
@@ -48,12 +48,14 @@
                                     @csrf
                                     @method('PATCH')
                                     <select name="status" class="form-select form-select-sm mb-2">
+                        
                                         <option value="pending" {{ $request->status === 'pending' ? 'selected' : '' }}>
                                             Pendiente</option>
-                                        <option value="confirmed" {{ $request->status === 'confirmed' ? 'selected' : '' }}>
-                                            Confirmado</option>
-                                        <option value="completed" {{ $request->status === 'completed' ? 'selected' : '' }}>
-                                            Completado</option>
+                                          
+                                        <option value="approved" {{ $request->status === 'approved' ? 'selected' : '' }}>
+                                           Aprobado</option>
+                                        <option value="rejected" {{ $request->status === 'rejected' ? 'selected' : '' }}>
+                                           Rechazado</option>
                                     </select>
                                     <div class="form-check">
                                         <input class="form-check-input" type="checkbox" name="notify_email"

@@ -1,21 +1,25 @@
 <?php
+
 namespace App\Mail;
+
 use Illuminate\Bus\Queueable;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
 
-class VisitConfirmationMail extends Mailable
+class VisitConfirmation extends Mailable
 {
     use Queueable, SerializesModels;
 
     public $details;
+    public $qrFilePath;
 
     /**
      * Create a new message instance.
      */
-    public function __construct($details)
+    public function __construct($details, $qrFilePath)
     {
         $this->details = $details;
+        $this->qrFilePath = $qrFilePath; // Ruta al archivo QR
     }
 
     /**
@@ -23,8 +27,11 @@ class VisitConfirmationMail extends Mailable
      */
     public function build()
     {
-        return $this->subject('Confirmación de Visita')
+        return $this->subject('Confirmación de Visita Aprobada')
                     ->view('emails.visit_confirmation')
-                    ->with('details', $this->details);
+                    ->attach($this->qrFilePath, [
+                        'as' => 'codigo_qr.png',
+                        'mime' => 'image/png',
+                    ]);
     }
 }

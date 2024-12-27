@@ -15,11 +15,11 @@ return new class extends Migration
     {
         Schema::create('calendars', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('visit_request_id')->constrained('visit_requests')->onDelete('cascade'); // Links to 'requests'
-            $table->string('event_type'); // Type of event: "Visit" or "Event"
-            $table->string('title'); // Event title
-            $table->dateTime('start'); // Start datetime of the event
-            $table->dateTime('end'); // End datetime of the event
+            $table->foreignId('visit_request_id')->constrained('visit_requests')->onDelete('cascade')->onUpdate('cascade'); // Links to 'requests'
+            $table->string('event_type'); 
+            $table->string('title'); 
+            $table->dateTime('start'); 
+            $table->dateTime('end'); 
             $table->timestamps();
         });
         
