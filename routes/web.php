@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AsistenciaController;
+use App\Http\Controllers\VisitController;
 use App\Http\Controllers\VisitRequestController;
  Route::get('/asistencias/reportes', [AsistenciaController::class, 'reportes']);
 
@@ -44,3 +45,6 @@ Route::get('/visit-requests', [VisitRequestController::class, 'index'])->name('v
 
 // Ruta para actualizar el estado de una solicitud
 Route::patch('/visit-requests/{id}/status', [VisitRequestController::class, 'updateStatus'])->name('visitRequests.updateStatus');
+Route::get('/visits/scan', [VisitController::class, 'scan'])->name('visits.scan');
+Route::post('/visits/process', [VisitController::class, 'processQRCode'])->name('visits.process');
+Route::post('/visits/complete/{id}', [VisitController::class, 'completeVisit'])->name('visits.complete');
