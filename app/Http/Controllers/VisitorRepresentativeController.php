@@ -128,7 +128,7 @@ class VisitorRepresentativeController extends Controller
      */
     public function show($id)
     {
-        $representative = VisitorRepresentative::with('requests')->findOrFail($id);
+        $representative = VisitorRepresentative::with('visitRequests')->findOrFail($id);
         return view('visitor_representatives.show', compact('representative'));
     }
 }

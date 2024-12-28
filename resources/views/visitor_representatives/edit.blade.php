@@ -1,4 +1,5 @@
 @extends('layouts.admin')
+
 @section('content')
     <div class="content" style="margin-left: 20px">
         <h1>Edit Representative: {{ $representative->user->name }}</h1>
@@ -35,9 +36,9 @@
                                         </div>
                                         <div class="col-md-4">
                                             <div class="form-group">
-                                                <label for="identification">Identification</label>
-                                                <input type="text" name="identification" value="{{ $representative->identification }}" class="form-control" required>
-                                                @error('identification')
+                                                <label for="email">Email<b>*</b></label>
+                                                <input type="email" name="email" value="{{ $representative->user->email }}" class="form-control required" required>
+                                                @error('email')
                                                     <small style="color:red;">*This field is required</small>
                                                 @enderror
                                             </div>
@@ -45,7 +46,16 @@
                                     </div>
 
                                     <div class="row">
-                                        <div class="col-md-6">
+                                        <div class="col-md-4">
+                                            <div class="form-group">
+                                                <label for="identification">Identification</label>
+                                                <input type="text" name="identification" value="{{ $representative->identification }}" class="form-control" required>
+                                                @error('identification')
+                                                    <small style="color:red;">*This field is required</small>
+                                                @enderror
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
                                             <div class="form-group">
                                                 <label for="phone">Phone</label>
                                                 <input type="text" name="phone" value="{{ $representative->phone }}" class="form-control" required>

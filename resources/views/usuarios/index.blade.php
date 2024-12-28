@@ -64,12 +64,14 @@
                                                         class="btn btn-info"><i class="bi bi-eye"></i></a>
                                                     <a href='{{ route('usuarios.edit', $usuario->id) }}' type="button"
                                                         class="btn btn-success"><i class="bi bi-pencil"></i></a>
-                                                    <form action="{{ url('usuarios', $usuario->id) }}" method="post">
-                                                        @csrf
-                                                        {{ method_field('DELETE') }}
-                                                        <button type="submit" onclick="return confirm('estas seguro de eliminar este regitro?')" class="btn btn-danger"> <i
-                                                                class="bi bi-trash"></i></button>
-                                                    </form>
+                                                        <form action="{{ route('usuarios.destroy', $usuario->id) }}" method="POST">
+                                                            @csrf
+                                                            @method('DELETE')
+                                                            <button type="submit" onclick="return confirm('¿Estás seguro de eliminar este registro?')" class="btn btn-danger">
+                                                                <i class="bi bi-trash"></i>
+                                                            </button>
+                                                        </form>
+                                                        
                                                 </div>
                                             </center>
                                         </td>

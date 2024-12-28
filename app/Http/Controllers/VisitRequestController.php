@@ -50,7 +50,8 @@ class VisitRequestController extends Controller
             $visit->visitor_count = $visitRequest->visitor_count;
 
             // Generar un código único basado en el correo del usuario y un número aleatorio
-            $uniqueCode = hash('sha256', $visitRequest->email . rand(1000, 9999));
+            $uniqueCode = hash('crc32', $visitRequest->email . rand(1000, 9999));
+
             $visit->unique_identifier = $uniqueCode;
             $visit->save();
 
@@ -84,7 +85,7 @@ class VisitRequestController extends Controller
     // Generar el contenido del QR y guardarlo como archivo temporal
     $qrContent = "Unique Code: {$visit->unique_identifier}";
     $filePath = storage_path('app/temp_qr_' . $visit->id . '.png');
-    QrCode::format('png')->size(300)->generate($qrContent, $filePath);
+    QrCode::format('png')->size(800)->margin(12)->generate($qrContent, $filePath);
 
     // Enviar el correo con los detalles y el QR adjunto
     Mail::to($user->email)->send(new VisitConfirmation($details, $filePath));

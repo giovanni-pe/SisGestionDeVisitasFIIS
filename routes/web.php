@@ -1,10 +1,10 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\AsistenciaController;
+
 use App\Http\Controllers\VisitController;
 use App\Http\Controllers\VisitRequestController;
- Route::get('/asistencias/reportes', [AsistenciaController::class, 'reportes']);
+use Illuminate\Support\Facades\Auth;
 
 /*
 |--------------------------------------------------------------------------
@@ -22,18 +22,15 @@ Route::get('/', function () {
 })->middleware('auth');
  
 Route::get('/',[App\Http\Controllers\AdminController::class,'index'])->name('home')->middleware('auth');
-Route::get('/asistencias/reportes', [App\Http\Controllers\AsistenciaController::class, 'reportes'])->name('reportes');
-Route::get('/asistencias/pdf', [App\Http\Controllers\AsistenciaController::class, 'pdf'])->name('pdf');
-Route::get('/asistencias/pdf_fechas', [App\Http\Controllers\AsistenciaController::class, 'pdf_fechas'])->name('pdf_fechas');
+
 Auth::routes(['register'=>true]);
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
-//Route::get('/miembros', [App\Http\Controllers\MiembroController::class, 'index']);
-//Route::get('/miembros/create', [App\Http\Controllers\MiembroController::class, 'create']);
+
 
 Route::resource('/usuarios',App\Http\Controllers\UserController::class)->middleware('can:usuarios');
-Route::resource('/asistencias',App\Http\Controllers\AsistenciaController::class);
+
 
 Route::resource('processes',App\Http\Controllers\ProcessController::class);
 
@@ -48,3 +45,6 @@ Route::patch('/visit-requests/{id}/status', [VisitRequestController::class, 'upd
 Route::get('/visits/scan', [VisitController::class, 'scan'])->name('visits.scan');
 Route::post('/visits/process', [VisitController::class, 'processQRCode'])->name('visits.process');
 Route::post('/visits/complete/{id}', [VisitController::class, 'completeVisit'])->name('visits.complete');
+Route::get('/visits/in-progress', [VisitController::class, 'visitsInProgress'])->name('visits.in_progress');
+Route::get('/visits/completed', [VisitController::class, 'visitsCompleted'])->name('visits.completed');
+Route::get('/visits/cancelled', [VisitController::class, 'visitsCancelled'])->name('visits.cancelled');

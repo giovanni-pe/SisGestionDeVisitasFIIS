@@ -21,6 +21,6 @@ class VisitorRepresentative extends Model
 
     public function visitRequests()
     {
-        return $this->hasMany(VisitRequest::class);
+        return $this->hasMany(VisitRequest::class,'representative_id');
     }
 }

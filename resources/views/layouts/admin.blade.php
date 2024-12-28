@@ -8,7 +8,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Sistema de control Proceso RSL && MSL</title>
+    <title>Sistema de Gestion de Visitas FIIS-UNAS</title>
 
     <!-- Google Font: Source Sans Pro -->
     <link rel="stylesheet"
@@ -236,89 +236,6 @@ scratch. This page gets rid of all links and provides the needed markup only.
                             </li>
                         @endcan
 
-                        @can('ministeriost')
-                            <li class="nav-item ">
-                                <a href="" class="nav-link active">
-                                    <i class="nav-icon "><i class="bi bi-building "></i></i>
-                                    <p>
-                                        Ministerios
-                                        <i class="right fas fa-angle-left"></i>
-                                    </p>
-                                </a>
-                                <ul class="nav nav-treeview">
-                                    <li class="nav-item">
-                                        <a href="{{ url('ministerios/create') }}" class="nav-link ">
-                                            <i class="far fa-circle nav-icon"></i>
-                                            <p>Nuevo Ministerio</p>
-                                        </a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a href="{{ url('ministerios') }}" class="nav-link">
-                                            <i class="far fa-circle nav-icon"></i>
-                                            <p>Listado de Ministerios</p>
-                                        </a>
-                                    </li>
-                                </ul>
-                            </li>
-                        @endcan
-                        @can('miembrost')
-                            <li class="nav-item ">
-                                <a href="" class="nav-link active">
-                                    <i class="nav-icon "><i class="bi bi-file-person-fill "></i></i>
-                                    <p>
-                                        Miembros
-                                        <i class="right fas fa-angle-left"></i>
-                                    </p>
-                                </a>
-                                <ul class="nav nav-treeview">
-                                    <li class="nav-item">
-                                        <a href="{{ url('miembros/create') }}" class="nav-link ">
-                                            <i class="far fa-circle nav-icon"></i>
-                                            <p>Nuevo miembro</p>
-                                        </a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a href="{{ url('miembros') }}" class="nav-link">
-                                            <i class="far fa-circle nav-icon"></i>
-                                            <p>Listado de miembros</p>
-                                        </a>
-                                    </li>
-                                </ul>
-                            </li>
-                        @endcan
-                        @can('asistenciasS')
-                            <li class="nav-item ">
-                                <a href="" class="nav-link active">
-                                    <i class="nav-icon "><i class="bi bi-calendar2-week "></i></i>
-                                    <p>
-
-
-                                        Asistencias
-                                        <i class="right fas fa-angle-left"></i>
-                                    </p>
-                                </a>
-                                <ul class="nav nav-treeview">
-                                    <li class="nav-item">
-                                        <a href="{{ url('asistencias/create') }}" class="nav-link ">
-                                            <i class="far fa-circle nav-icon"></i>
-                                            <p>Registrar asistencia</p>
-                                        </a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a href="{{ url('asistencias') }}" class="nav-link">
-                                            <i class="far fa-circle nav-icon"></i>
-                                            <p>Ver asistencias</p>
-                                        </a>
-                                    </li>
-                                </ul>
-                            </li>
-                        @endcan
-
-
-
-
-                      
-
                         @can('research_lines')
                             <li class="nav-item">
                                 <a href="" class="nav-link active">
@@ -329,13 +246,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                                     <li class="nav-item">
                                         <a href="{{ route('visitRequests.index') }}" class="nav-link">
                                             <i class="far fa-circle nav-icon"></i>
-                                            <p>Visitas Pendientes</p>
-                                        </a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a href="{{ route('visitRequests.index') }}" class="nav-link">
-                                            <i class="far fa-circle nav-icon"></i>
-                                            <p>Visitas Aceptadas</p>
+                                            <p>Gestionar Solicitudes</p>
                                         </a>
                                     </li>
                                 </ul>
@@ -351,13 +262,13 @@ scratch. This page gets rid of all links and provides the needed markup only.
                                 <li class="nav-item">
                                     <a href="{{ route('visitor_representatives.create') }}" class="nav-link">
                                         <i class="far fa-circle nav-icon"></i>
-                                        <p>Registrar Nuevo Representante</p>
+                                        <p>Registrar Representante</p>
                                     </a>
                                 </li>
                                 <li class="nav-item">
                                     <a href="{{ route('visitor_representatives.index') }}" class="nav-link">
                                         <i class="far fa-circle nav-icon"></i>
-                                        <p>Listado de Represetantes de visita</p>
+                                        <p>Ver Represetantes</p>
                                     </a>
                                 </li>
                             </ul>
@@ -371,15 +282,9 @@ scratch. This page gets rid of all links and provides the needed markup only.
                                 </a>
                                 <ul class="nav nav-treeview">
                                     <li class="nav-item">
-                                        <a href="{{ route('processes.create') }}" class="nav-link">
+                                        <a href="{{ route('visits.in_progress') }}" class="nav-link">
                                             <i class="far fa-circle nav-icon"></i>
-                                            <p>Nuevo Proceso</p>
-                                        </a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a href="{{ route('processes.index') }}" class="nav-link">
-                                            <i class="far fa-circle nav-icon"></i>
-                                            <p>Listado de Procesos</p>
+                                            <p>Visitas en Proceso</p>
                                         </a>
                                     </li>
                                 </ul>
@@ -394,17 +299,12 @@ scratch. This page gets rid of all links and provides the needed markup only.
                                 </a>
                                 <ul class="nav nav-treeview">
                                     <li class="nav-item">
-                                        <a href="{{ route('visitor_representatives.index') }}" class="nav-link">
+                                        <a href="{{ route('visits.completed') }}" class="nav-link">
                                             <i class="far fa-circle nav-icon"></i>
-                                            <p>Nueva Fase</p>
+                                            <p>Ver</p>
                                         </a>
                                     </li>
-                                    <li class="nav-item">
-                                        <a href="{{ route('visitor_representatives.index') }}" class="nav-link">
-                                            <i class="far fa-circle nav-icon"></i>
-                                            <p>Listado de Fases</p>
-                                        </a>
-                                    </li>
+                                    
                                 </ul>
                             </li>
                         @endcan
@@ -419,62 +319,37 @@ scratch. This page gets rid of all links and provides the needed markup only.
                                 </a>
                                 <ul class="nav nav-treeview">
                                     <li class="nav-item">
-                                        <a href="{{ route('visitor_representatives.index') }}" class="nav-link">
+                                        <a href="{{ route('visits.cancelled') }}" class="nav-link">
                                             <i class="far fa-circle nav-icon"></i>
-                                            <p>Nuevo Conteo</p>
-                                        </a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a href="{{ route('visitor_representatives.index') }}" class="nav-link">
-                                            <i class="far fa-circle nav-icon"></i>
-                                            <p>Listado de Conteos</p>
+                                            <p>Ver</p>
                                         </a>
                                     </li>
                                 </ul>
                             </li>
                         @endcan
-                        @can('student_phase_database_counts')
-                            <li class="nav-item">
-                                <a href="" class="nav-link active">
-                                    <i class="nav-icon fas fa-check-circle"></i>
-                                    <p>Satisfaccion de las Vistias <i class="right fas fa-angle-left"></i></p>
-                                </a>
-                                <ul class="nav nav-treeview">
-                                    <li class="nav-item">
-                                        <a href="{{ route('visitor_representatives.index') }}" class="nav-link">
-                                            <i class="far fa-circle nav-icon"></i>
-                                            <p>Nueva Evaluación</p>
-                                        </a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a href="{{ route('visitor_representatives.index') }}" class="nav-link">
-                                            <i class="far fa-circle nav-icon"></i>
-                                            <p>Listado de Evaluaciones</p>
-                                        </a>
-                                    </li>
-                                </ul>
-                            </li>
-                        @endcan
+                       
                         <li class="nav-item ">
                             <a href="" class="nav-link active">
-                                <i class="nav-icon "><i class="bi bi-printer "></i></i>
-                                <p>Reportes
+                                <i class="nav-icon bi bi-qr-code-scan"></i>
+
+                                <p>QR Scan
                                     <i class="right fas fa-angle-left"></i>
                                 </p>
                             </a>
                             <ul class="nav nav-treeview">
                                 <li class="nav-item">
-                                    <a href="{{ url('asistencias/reportes') }}" class="nav-link ">
+                                    <a href="{{ url('visits/scan') }}" class="nav-link ">
                                         <i class="far fa-circle nav-icon"></i>
-                                        <p>Asistencias</p>
+                                        <p>Escanear</p>
                                     </a>
                                 </li>
                                 <li class="nav-item">
-                                    <a href="{{ url('asistencias/reportes') }}" class="nav-link">
+                                    <a href="#" class="nav-link disabled" tabindex="-1" aria-disabled="true">
                                         <i class="far fa-circle nav-icon"></i>
-                                        <p>Usuarios</p>
+                                        <p>Configurar</p>
                                     </a>
                                 </li>
+                                
                             </ul>
                         </li>
 

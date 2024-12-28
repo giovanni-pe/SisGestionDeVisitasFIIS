@@ -49,20 +49,7 @@
                                     <td>
                                         <div class="btn-group">
                                             <!-- View Details -->
-                                            <a href="{{ route('visitor_representatives.show', $rep->id) }}" class="btn btn-info">
-                                                <i class="bi bi-eye"></i> Details
-                                            </a>
-                                            
-                                            <!-- View Visits -->
-                                            <a href="{{ route('visitor_representatives.show', $rep->id) }}#visits" class="btn btn-primary">
-                                                <i class="bi bi-calendar"></i> Visits
-                                            </a>
-
-                                            <!-- View Calendar -->
-                                            <a href="{{ route('visitor_representatives.show', $rep->id) }}#calendar" class="btn btn-warning">
-                                                <i class="bi bi-calendar3"></i> Calendar
-                                            </a>
-
+                        
                                             <!-- Edit -->
                                             <a href="{{ route('visitor_representatives.edit', $rep->id) }}" class="btn btn-success">
                                                 <i class="bi bi-pencil"></i> Edit
@@ -88,4 +75,6 @@
         </div>
     </div>
 </div>
+
+
 @endsection
